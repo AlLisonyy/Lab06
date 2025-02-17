@@ -1,9 +1,19 @@
 ---
 title: "Lab 06 - Ugly charts and Simpson's paradox"
-author: "Insert your name here"
-date: "Insert date here"
+author: "Allison Li"
+date: "02142025"
 output: github_document
 ---
+
+### Email and name
+```{r email and name}
+library(usethis)
+use_git_config(
+  user.name = "Allison",
+  user.email = "liy423@gmail.com"
+)
+```
+
 
 ### Load packages and data
 
@@ -15,10 +25,31 @@ library(mosaicData)
 
 ### Exercise 1
 
-Remove this text, and add your answer for Exercise 1 here.
-Add code chunks as needed.
-Don't forget to label your code chunk.
-Do not use spaces in code chunk labels.
+```{r line-plot}
+staff_long <- staff %>%
+  pivot_longer(cols = -faculty_type, names_to = "year") %>%
+  mutate(value = as.numeric(value))
+staff_long
+
+staff_long %>%
+  ggplot(aes(x = year, y = value, color = faculty_type)) +
+  geom_line()
+
+staff_long %>%
+  ggplot(aes(
+    x = year,
+    y = value,
+    group = faculty_type,
+    color = faculty_type
+  )) +
+  geom_line() +
+  labs(title = "",
+       x = "",
+       y = "Latitude",
+       color = "Dataset")
+```
+
+
 
 ### Exercise 2
 
@@ -31,4 +62,7 @@ Do not use spaces in code chunk labels.
 
 ...
 
-Add exercise headings as needed.
+### Exercise 4
+
+
+### Exercise 5

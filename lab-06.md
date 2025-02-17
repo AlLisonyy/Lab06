@@ -1,13 +1,14 @@
-Lab 06 - Sad plots
+Lab 06 - Ugly charts and Simpson’s paradox
 ================
-Insert your name here
-Insert date here
+Allison Li
+02142025
 
 ### Load packages and data
 
 ``` r
 library(tidyverse) 
-library(dsbox) 
+library(dsbox)
+library(mosaicData) 
 ```
 
 ### Exercise 1
