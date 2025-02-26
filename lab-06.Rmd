@@ -21,6 +21,7 @@ use_git_config(
 library(tidyverse) 
 library(dsbox)
 library(mosaicData) 
+staff <- read_csv("data/instructional-staff.csv")
 ```
 
 ### Exercise 1
@@ -43,26 +44,93 @@ staff_long %>%
     color = faculty_type
   )) +
   geom_line() +
-  labs(title = "",
-       x = "",
-       y = "Latitude",
-       color = "Dataset")
+  labs(title = "Instructional staff employment trends",
+       y = "percentage of hires",
+       color = "faculty type")
 ```
 
-
+According to the graph, we can clearly see that the Part-Time faculty employment trend has increased over the years while the Full-time Tenure-track Faculty and the Full-time Tenured Faculty showed clear decreasing trends. For Full-time Non-Tenured-Track Faculty, it seems that there are higher employment rate in 2011 comparing with 1975. For Graduate Student Employees, although there is a clear decrease in 1989, the rest employment rate remained relatively similar over the years, around 20%. 
 
 ### Exercise 2
 
-Remove this text, and add your answer for Exercise 1 here.
-Add code chunks as needed.
-Don't forget to label your code chunk.
-Do not use spaces in code chunk labels.
+If I want to show the trend of the part-time faculty employment rate comparing with other staff types, I would either make other types of faculty type different types of color grey, or I would make this line thicker so people would know what is the main point of my graph.   
+Additionally, I believe we can also re-code the variables into part-time faculty and other types of faculty to highlight the comparison. 
+
+```{r improved comparison visualization}
+##I plan to use one line with color to represent part-time faculty employment rate trend while keep other lines grey to represent other instructional staff types.
+
+staff_long %>%
+  mutate(faculty_type_compare = if_else(faculty_type == "Part-Time Faculty", "Part-Time Faculty", "other")) %>% 
+  ggplot(aes(
+    x = year,
+    y = value,
+    group = faculty_type,
+    color = faculty_type_compare
+  )) +
+  geom_line(size = 1) +
+  scale_color_manual(values = c("Part-Time Faculty" = "#FF007F", "other" = "gray")) +
+  labs(title = "Instructional staff employment trends comparison",
+       y = "percentage of hires",
+       color = "faculty type")
+```
 
 ### Exercise 3
 
-...
+```{r refine visualization of fisheries}
+##In my understanding, I believe one of the best ways to make a better visualization is to make a bar chart for the top 10 countries with the most fish caught and farmed.
+fisheries <- read_csv("data/fisheries.csv")
+
+##the top ten countries for farming fish
+top10_aquaculture <- fisheries %>%
+  arrange(desc(aquaculture)) %>%
+  slice_head(n = 10)
+##The top ten countries for fish caught
+top10_capture <- fisheries %>%
+  arrange(desc(capture)) %>%
+  slice_head(n = 10)
+
+##since the top ten countries for farming and capturing are different, I decided to make two bar chart with one for each. 
+##Top 10 countries of capture fish visualization
+top_countries_capture <- top10_capture %>%
+  pivot_longer(cols = c(aquaculture, capture), names_to = "type", values_to = "production")
+
+ggplot(top_countries_capture, aes(x = reorder(country, -production), y = production, fill = type)) +
+  geom_bar(stat = "identity", position = "dodge") + 
+  coord_flip() +
+  labs(title = "Top 10 Countries in Fisheries Capture (Aquaculture vs. Capture)",
+       x = "Country",
+       y = "Production (metric tons)",
+       fill = "Production Type")    
+
+##Top 10 countries of farming fish visualization
+top_countries_farm <- top10_aquaculture %>%
+  pivot_longer(cols = c(aquaculture, capture), names_to = "type", values_to = "production")
+
+ggplot(top_countries_farm, aes(x = reorder(country, -production), y = production, fill = type)) +
+  geom_bar(stat = "identity", position = "dodge") + 
+  coord_flip() +
+  labs(title = "Top 10 Countries in Fisheries Farm (Aquaculture vs. Capture)",
+       x = "Country",
+       y = "Production (tons)",
+       fill = "Production Type")  
+```
 
 ### Exercise 4
 
+```{r smokers in Whickham}
+###install.packages("mosaicData")
+###install.packages("performance")
+library(tidyverse)
+library(mosaicData)
+
+data(Whickham)
+?Whickham
+```
+
+4.1. According to the codebook, I think the data come from
+4.2.
+4.3.
+4.4.
+4.5. 
 
 ### Exercise 5
