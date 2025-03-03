@@ -127,9 +127,9 @@ data(Whickham)
 ?Whickham
 ```
 
-4.1. According to the codebook, I think the data come from
-4.2.
-4.3.
+4.1. According to the codebook, I think the data comes from observational data. Because it is simply asking questions including the age of the participant, whether the participant is dead of alive (outcome), and whether the participant smoke or not. These questions are not manipulated or controled, so this is an observation.
+4.2. There are 1314 observations in the dataset, with each of them representing the basic information for each participant about whether they smoke or not, age, and the living outcomes. 
+4.3. There are three variables. The outcome variable is categorical variable; The smoker variable is categorical variable; The age variable is numeric variable. 
 4.4.
 4.5. 
 
